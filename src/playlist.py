@@ -60,7 +60,7 @@ class PlayList:
         return best_video
 
     @property
-    def get_title(self):
+    def get_title(self) -> str:
         """
         Получаем заголовок плейлиста
         """
@@ -69,7 +69,7 @@ class PlayList:
                 title = i['snippet']['title']
                 return title
 
-    def get_playlists(self):
+    def get_playlists(self) -> dict:
         """
         Список плейлистов
         """
@@ -78,7 +78,7 @@ class PlayList:
                                              part='contentDetails,snippet', maxResults=50,).execute()
         return playlists
 
-    def get_playlist_data(self):
+    def get_playlist_data(self) -> dict:
         """
         Данные по роликам в плейлисте
         """
