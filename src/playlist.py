@@ -18,17 +18,17 @@ class PlayList:
         Возвращаем все id видео в листе
         """
         playlist_videos = self.youtube.playlistItems().list(playlistId=self.pl_id,
-                                                       part='contentDetails',
-                                                       maxResults=50,
-                                                       ).execute()
+                                                       part='contentDetails', maxResults=50, ).execute()
 
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
         return video_ids
 
     def get_duration(self) -> list:
+        """
+        Получаем список длительностей видео в плейлисте
+        """
         video_response = self.youtube.videos().list(part='contentDetails,statistics',
-                                                    id=','.join(self.get_video_ids())
-                                                    ).execute()
+                                                    id=','.join(self.get_video_ids())).execute()
         duration_list = []
         for video in video_response['items']:
             # YouTube video duration is in ISO 8601 format
@@ -46,9 +46,11 @@ class PlayList:
         return total_duration
 
     def show_best_video(self) -> str:
+        """
+        Получаем самое залайканное видео в плейлисте
+        """
         video_response = self.youtube.videos().list(part='contentDetails,statistics',
-                                                    id=','.join(self.get_video_ids())
-                                                    ).execute()
+                                                    id=','.join(self.get_video_ids())).execute()
         likes = 0
         best_video = None
         for video in video_response['items']:
